@@ -1,4 +1,5 @@
 <script >
+
 import { RouterLink, RouterView } from 'vue-router'
 import BuyChart from './views/BuyChart.vue';
 export default {

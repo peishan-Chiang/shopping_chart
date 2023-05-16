@@ -71,7 +71,8 @@ export default {
         getIndex(index) { //加法的狀況
             console.log(index)
 
-            let Newarr = []
+            let Newarr = [];
+            let deletenum =index+1; 
             let arr = JSON.parse(localStorage.getItem("chartList"));
             let num = arr[index].number;
             num = parseInt(num);
@@ -83,31 +84,52 @@ export default {
                 img: arr[index].img,
                 content: arr[index].content
             }
-            console.log(updateItem)
-            arr.splice(index, 1);
-
+            console.log(updateItem);
+            
+           
+           
             for (let i = 0; i < arr.length; i++) {
-                if (i === index) {
+                if (i === index ) {
+                    
                     Newarr.push(updateItem);
-
+                    
+                    
                 }
-
-                Newarr.push(arr[i]);
+                               
+                    Newarr.push(arr[i]);
+        
+               
 
             }
+
+            console.log(arr);
             console.log(Newarr);
+            Newarr.splice(deletenum, 1);
             this.chartList = Newarr;
-            this.refresh = Newarr;
+            // this.refresh = Newarr;
             return localStorage.setItem("chartList", JSON.stringify(Newarr));
         },
         minusIndex(index) { //減法狀況
+            
             console.log(index)
-
+            let deletenum =index+1; 
             let Newarr = []
             let arr = JSON.parse(localStorage.getItem("chartList"));
             let num = arr[index].number;
+            let updateItem={};
             num = parseInt(num);
-            let updateItem = {
+            if(num===0){
+                alert('已經歸零，請刪除，或新增數量');
+                updateItem = {
+                itemId: arr[index].itemId,
+                text: arr[index].text,
+                number: num,
+                price: arr[index].price,
+                img: arr[index].img,
+                content: arr[index].content
+            }
+            }else{
+                updateItem = {
                 itemId: arr[index].itemId,
                 text: arr[index].text,
                 number: num - 1,
@@ -115,24 +137,34 @@ export default {
                 img: arr[index].img,
                 content: arr[index].content
             }
-            console.log(updateItem)
-            arr.splice(index, 1);
+            }
 
+            
+            
+            console.log(updateItem)
+           
             for (let i = 0; i < arr.length; i++) {
                 if (i === index) {
+                   
                     Newarr.push(updateItem);
+                
 
                 }
+               
 
                 Newarr.push(arr[i]);
 
             }
+
+            
+            console.log(arr);
             console.log(Newarr);
+            Newarr.splice(deletenum, 1);
             this.chartList = Newarr;
-            this.refresh = Newarr;
             return localStorage.setItem("chartList", JSON.stringify(Newarr));
         },
         deleteIndex(index) {
+
             let arr = JSON.parse(localStorage.getItem("chartList"));
             let Newarr = []
             Newarr = arr.splice(index, 1);
@@ -181,9 +213,9 @@ export default {
 
 
 
-        if (localStorage.getItem("chartList") === null) {
+        // if (localStorage.getItem("chartList") === null) {
             localStorage.setItem("chartList", JSON.stringify(this.chartList));
-        }///TEST
+        // }///TEST
 
 
         this.chartList = JSON.parse(localStorage.getItem("chartList"));
@@ -232,10 +264,11 @@ export default {
                 </div>
                 <!-- <button type="button" @click="getIndex(index)"> {{index}}</button>  -->
                 <div class="btn-Area">
-                    <button class="button-function" @click="getIndex(index)"><i class="fa-solid fa-plus"> ADD</i></button>
+                    <button class="button-function" @click="getIndex(index)"><i class="fa-solid fa-plus"> 
+                             ADD</i></button>
                     <button class="button-function" @click="minusIndex(index)"><i class="fa-solid fa-minus">
                             MINUS</i></button>
-                    <button class="button-function" @click=" deleteIndex(index)"><i class="fa-solid fa-x">
+                    <button class="button-function" @click="deleteIndex(index)"><i class="fa-solid fa-x">
                             DELETE</i></button>
 
                 </div>
